@@ -19,11 +19,31 @@ public class CruddemoApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return runner -> {
+//			createStudent(studentDAO);
+//			createMultipleStudent(studentDAO);
 //			readStudent(studentDAO);
 //			queryForStudents(studentDAO);
 //			queryForStudentsByLastName(studentDAO);
-			updateStudent(studentDAO);
+//			updateStudent(studentDAO);
+//			deleteStudent(studentDAO);
+//			deleteAllStudents(studentDAO);
         };
+	}
+
+	private void deleteAllStudents(StudentDAO studentDAO) {
+		System.out.println("Deleting all students");
+		System.out.println("Deleted : " + studentDAO.deleteAllStudent() + " students!");
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		System.out.println("Delete student which has id 3");
+		System.out.println(studentDAO.findById(3));
+		System.out.println("Deleting...");
+		studentDAO.deleteById(3);
+		System.out.println("Deleted!");
+		for (Student student : studentDAO.findAll()) {
+			System.out.println(student);
+		}
 	}
 
 	private void updateStudent(StudentDAO studentDAO) {

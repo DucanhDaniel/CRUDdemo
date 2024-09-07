@@ -2,12 +2,12 @@ package com.personal.cruddemo.dao;
 
 import com.personal.cruddemo.entity.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 @Repository
@@ -57,4 +57,30 @@ public class StudentDAOImpl implements StudentDAO{
     public void update(Student student) {
         entityManager.merge(student);
     }
+
+    @Override
+    @Transactional
+    public int deleteByLastName(String lastName) {
+        // Delete student base on condition
+        Query query = entityManager.createQuery("DELETE FROM Student WHERE lastName =: theData");
+        query.setParameter("theData", lastName);
+        return query.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public int deleteAllStudent() {
+        // Delete student base on condition
+        Query query = entityManager.createQuery("DELETE FROM Student");
+        return query.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Integer id) {
+        Student student = entityManager.find(Student.class, id);
+        entityManager.remove(student);
+    }
+
+
 }
